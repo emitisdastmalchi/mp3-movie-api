@@ -1,16 +1,26 @@
 from pydantic import BaseModel, Field
 
+
 class HealthResponse(BaseModel):
     status: str
     version: str
-    
 
-class DatasetInfo(BaseModel):
-    id: int
+
+class MovieUploadInfo(BaseModel):
     filename: str
     rows: int
     columns: int
     column_names: list[str]
+
+
+class MovieDataResponse(BaseModel):
+    data: list[dict]
+    total_rows: int
+
+
+class MovieProcessingReport(BaseModel):
+    validation_rows_removed: int
+    cleaning_report: dict
 
 
 class ValidationSettings(BaseModel):
@@ -39,9 +49,3 @@ class ProcessingSettings(BaseModel):
 class ProcessConfig(BaseModel):
     validation: ValidationSettings = Field(default_factory=ValidationSettings)
     processing: ProcessingSettings = Field(default_factory=ProcessingSettings)
-
-
-class ProcessingReport(BaseModel):
-    id: int
-    validation_rows_removed: int
-    cleaning_report: dict[str, int]
